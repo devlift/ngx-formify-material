@@ -6,4 +6,5 @@ export default class FormControlExtended extends FormControl {
 	public controlType: FormControlType;
 	public placeholder?: string;
 	public options?: SelectOption[];
+	public flex?: number;
 }

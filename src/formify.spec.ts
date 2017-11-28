@@ -7,6 +7,8 @@ import { FormControlType } from './enums/form-control.enum';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatInputModule, MatSelectModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
 import { async } from '@angular/core/testing';
 
 import 'jasmine';
@@ -86,7 +88,12 @@ describe( 'formify', () => {
 			imports: [
 				CommonModule,
 				FormsModule,
-				ReactiveFormsModule
+				ReactiveFormsModule,
+				MatInputModule,
+				MatSelectModule,
+				MatRadioModule,
+				MatCheckboxModule,
+				FlexLayoutModule
 			],
 			declarations: [ FormComponent ]
 		} )
@@ -110,12 +117,12 @@ describe( 'formify', () => {
 	
 	it( 'should have a form control', () => {
 		fixture.detectChanges();
-		expect( el.querySelectorAll( 'formify-control' ).length ).toBeGreaterThan( 0 );
+		expect( el.querySelectorAll( 'mat-form-field' ).length ).toBeGreaterThan( 0 );
 	} );
 
 	it( 'should have the correct number of form controls', () => {
 		fixture.detectChanges();
-		expect( el.querySelectorAll( 'formify-control' ).length ).toEqual( 7 );
+		expect( el.querySelectorAll( 'mat-form-field, mat-checkbox, mat-radio-group, mat-select, input[type=file]' ).length ).toEqual( 7 );
 	} );
 
 	it( 'should have the correct order of form controls', () => {
@@ -151,7 +158,7 @@ describe( 'formify', () => {
 	it( 'should have a select form control', () => {
 		fixture.detectChanges();
 
-		let control = el.querySelectorAll( 'select' )
+		let control = el.querySelectorAll( 'mat-select' )
 		expect( control.length ).toBeGreaterThan( 0 );
 	} );
 
@@ -226,7 +233,7 @@ describe( 'formify', () => {
 
 		expect( (<HTMLInputElement>el.querySelectorAll( 'input[type=text]' )[0]).value ).toEqual( 'hello' );
 		expect( el.querySelectorAll( 'textarea' )[0].value ).toEqual( 'a comment' );
-		expect( parseInt( el.querySelectorAll( 'select' )[0].value ) ).toEqual( 2 );
+		expect( parseInt( el.querySelectorAll( 'mat-select' )[0]["value"] ) ).toEqual( 2 );
 		expect( (<HTMLInputElement>el.querySelectorAll( 'input[type=radio]' )[0]).value ).toEqual( 'on' );
 		expect( (<HTMLInputElement>el.querySelectorAll( 'input[type=checkbox]' )[0]).checked ).toEqual( false );
 		expect( (<HTMLInputElement>el.querySelectorAll( 'input[type=password]' )[0]).value ).toEqual( 'abcd123' );

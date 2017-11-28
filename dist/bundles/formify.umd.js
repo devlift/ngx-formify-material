@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/forms'), require('@angular/common'), require('@angular/material')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/forms', '@angular/common', '@angular/material'], factory) :
-	(factory((global['ngx-formify-material'] = {}),global.ng.core,global.ng.forms,global.ng.common,global.material));
-}(this, (function (exports,core,forms,common,material) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/forms'), require('@angular/common'), require('@angular/material'), require('@angular/flex-layout')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/forms', '@angular/common', '@angular/material', '@angular/flex-layout'], factory) :
+	(factory((global['ngx-formify-material'] = {}),global.ng.core,global.ng.forms,global.ng.common,global.material,global.flexLayout));
+}(this, (function (exports,core,forms,common,material,flexLayout) { 'use strict';
 
 function __extends(d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -53,7 +53,7 @@ var FormComponent = /** @class */ (function () {
     FormComponent = __decorate([
         core.Component({
             selector: 'formify',
-            template: "<form class=\"formify\" [class]=\"formClass\">\n\t<mat-form-field class=\"formify-input\" *ngFor=\"let control of keys\" [ngSwitch]=\"formGroup.controls[control].controlType\">\n\t\t<ng-template [ngSwitchCase]=\"'Input'\">\n\t\t\t<input matInput [formControl]=\"formGroup.controls[control]\" type=\"text\" />\n\t\t\t<mat-placeholder>{{formGroup.controls[control].placeholder}}</mat-placeholder>\n\t\t</ng-template>\n\t\t<textarea matInput *ngSwitchCase=\"'TextArea'\" [placeholder]=\"formGroup.controls[control].placeholder\" [formControl]=\"formGroup.controls[control]\"></textarea>\n\t\t<mat-select *ngSwitchCase=\"'Select'\" [formControl]=\"formGroup.controls[control]\">\n\t\t\t<option *ngFor=\"let option of formGroup.controls[control].options\" [value]=\"option.data\">{{option.label}}</option>\n\t\t</mat-select>\n\t\t<mat-radio-group *ngSwitchCase=\"'Radio'\" [formControl]=\"formGroup.controls[control]\">\n\t\t\t<mat-radio-button *ngFor=\"let option of formGroup.controls[control].options\" class=\"formify-radio-line\" [value]=\"option.data\">{{option.label}}</mat-radio-button>\n\t\t</mat-radio-group>\n\t\t<mat-checkbox *ngSwitchCase=\"'Checkbox'\" [formControl]=\"formGroup.controls[control]\">{{formGroup.controls[control].placeholder}}</mat-checkbox>\n\t\t<ng-template [ngSwitchCase]=\"'Password'\">\n\t\t\t<input matInput [formControl]=\"formGroup.controls[control]\" type=\"password\" />\n\t\t\t<mat-placeholder>{{formGroup.controls[control].placeholder}}</mat-placeholder>\n\t\t</ng-template>\n\t\t<input *ngSwitchCase=\"'File'\" [formControl]=\"formGroup.controls[control]\" type=\"file\" (change)=\"fileSelected( $event.target.files )\"\n\t\t/>\n\t</mat-form-field>\n</form>",
+            template: "<form class=\"formify\" [class]=\"formClass\">\n\t<ng-container *ngFor=\"let control of keys\">\n\t\t<ng-container *ngIf=\"formGroup.controls[control].controlType === 'Input' || formGroup.controls[control].controlType === 'TextArea' || formGroup.controls[control].controlType === 'Password'\">\n\t\t\t<mat-form-field class=\"formify-input\" *ngIf=\"formGroup.controls[control].flex\" [fxFlex]=\"formGroup.controls[control].flex\">\n\t\t\t\t<input matInput *ngIf=\"formGroup.controls[control].controlType === 'Input'\" [formControl]=\"formGroup.controls[control]\" type=\"text\" [placeholder]=\"formGroup.controls[control].placeholder\" />\n\t\t\t\t<textarea matInput *ngIf=\"formGroup.controls[control].controlType === 'TextArea'\" [placeholder]=\"formGroup.controls[control].placeholder\" [formControl]=\"formGroup.controls[control]\"></textarea>\n\t\t\t\t<input matInput *ngIf=\"formGroup.controls[control].controlType === 'Password'\" [formControl]=\"formGroup.controls[control]\" type=\"password\" [placeholder]=\"formGroup.controls[control].placeholder\" />\n\t\t\t</mat-form-field>\n\t\t\t<mat-form-field class=\"formify-input\" *ngIf=\"!formGroup.controls[control].flex\">\n\t\t\t\t<input matInput *ngIf=\"formGroup.controls[control].controlType === 'Input'\" [formControl]=\"formGroup.controls[control]\" type=\"text\" [placeholder]=\"formGroup.controls[control].placeholder\" />\n\t\t\t\t<textarea matInput *ngIf=\"formGroup.controls[control].controlType === 'TextArea'\" [placeholder]=\"formGroup.controls[control].placeholder\" [formControl]=\"formGroup.controls[control]\"></textarea>\n\t\t\t\t<input matInput *ngIf=\"formGroup.controls[control].controlType === 'Password'\" [formControl]=\"formGroup.controls[control]\" type=\"password\" [placeholder]=\"formGroup.controls[control].placeholder\" />\n\t\t\t</mat-form-field>\n\t\t</ng-container>\n\n\t\t<mat-select class=\"formify-input\" *ngIf=\"formGroup.controls[control].controlType === 'Select' && formGroup.controls[control].flex\" [formControl]=\"formGroup.controls[control]\" [fxFlex]=\"formGroup.controls[control].flex\">\n\t\t\t<mat-option *ngFor=\"let option of formGroup.controls[control].options\" [value]=\"option.data\">{{option.label}}</mat-option>\n\t\t</mat-select>\n\t\t<mat-select class=\"formify-input\" *ngIf=\"formGroup.controls[control].controlType === 'Select' && !formGroup.controls[control].flex\" [formControl]=\"formGroup.controls[control]\">\n\t\t\t<mat-option *ngFor=\"let option of formGroup.controls[control].options\" [value]=\"option.data\">{{option.label}}</mat-option>\n\t\t</mat-select>\n\t\t\n\t\t<mat-radio-group class=\"formify-input\" *ngIf=\"formGroup.controls[control].controlType === 'Radio' && formGroup.controls[control].flex\" [formControl]=\"formGroup.controls[control]\" [fxFlex]=\"formGroup.controls[control].flex\">\n\t\t\t<mat-radio-button *ngFor=\"let option of formGroup.controls[control].options\" class=\"formify-radio-line\" [value]=\"option.data\">{{option.label}}</mat-radio-button>\n\t\t</mat-radio-group>\n\t\t<mat-radio-group class=\"formify-input\" *ngIf=\"formGroup.controls[control].controlType === 'Radio' && !formGroup.controls[control].flex\" [formControl]=\"formGroup.controls[control]\">\n\t\t\t<mat-radio-button *ngFor=\"let option of formGroup.controls[control].options\" class=\"formify-radio-line\" [value]=\"option.data\">{{option.label}}</mat-radio-button>\n\t\t</mat-radio-group>\n\n\t\t<mat-checkbox class=\"formify-input\" *ngIf=\"formGroup.controls[control].controlType === 'Checkbox' && formGroup.controls[control].flex\" [formControl]=\"formGroup.controls[control]\" [fxFlex]=\"formGroup.controls[control].flex\">{{formGroup.controls[control].placeholder}}</mat-checkbox>\n\t\t<mat-checkbox class=\"formify-input\" *ngIf=\"formGroup.controls[control].controlType === 'Checkbox' && !formGroup.controls[control].flex\" [formControl]=\"formGroup.controls[control]\">{{formGroup.controls[control].placeholder}}</mat-checkbox>\n\n\t\t<input *ngIf=\"formGroup.controls[control].controlType === 'File'\" [formControl]=\"formGroup.controls[control]\" type=\"file\" (change)=\"fileSelected( $event.target.files )\" />\n\t</ng-container>\n</form>",
         })
     ], FormComponent);
     return FormComponent;
@@ -98,6 +98,7 @@ var FormGroupService = /** @class */ (function () {
                 control.placeholder = datum.placeholder || '';
                 control.controlType = datum.type;
                 control.options = datum.options;
+                control.flex = datum.flex;
                 form.addControl(datum.name, control);
             });
         }
@@ -121,7 +122,8 @@ var FormifyModule = /** @class */ (function () {
                 material.MatInputModule,
                 material.MatSelectModule,
                 material.MatRadioModule,
-                material.MatCheckboxModule
+                material.MatCheckboxModule,
+                flexLayout.FlexLayoutModule
             ],
             declarations: [
                 FormComponent
@@ -147,7 +149,8 @@ var FormControl$1 = function (type, options) {
                     order: o.order,
                     placeholder: o.placeholder,
                     validators: o.validators,
-                    defaultValue: o.defaultValue
+                    defaultValue: o.defaultValue,
+                    flex: o.flex
                 },
                 enumerable: false,
                 configurable: false

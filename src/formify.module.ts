@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormComponent } from './components/form/form.component';
 import { FormGroupService } from './services/form-group.service';
 import { MatInputModule, MatSelectModule, MatRadioModule, MatCheckboxModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { MatInputModule, MatSelectModule, MatRadioModule, MatCheckboxModule } fr
         MatInputModule,
         MatSelectModule,
         MatRadioModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        FlexLayoutModule
     ],
     declarations: [
         FormComponent

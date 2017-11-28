@@ -1,22 +1,35 @@
 <form class="formify" [class]="formClass">
-	<mat-form-field class="formify-input" *ngFor="let control of keys" [ngSwitch]="formGroup.controls[control].controlType">
-		<ng-template [ngSwitchCase]="'Input'">
-			<input matInput [formControl]="formGroup.controls[control]" type="text" />
-			<mat-placeholder>{{formGroup.controls[control].placeholder}}</mat-placeholder>
-		</ng-template>
-		<textarea matInput *ngSwitchCase="'TextArea'" [placeholder]="formGroup.controls[control].placeholder" [formControl]="formGroup.controls[control]"></textarea>
-		<mat-select *ngSwitchCase="'Select'" [formControl]="formGroup.controls[control]">
-			<option *ngFor="let option of formGroup.controls[control].options" [value]="option.data">{{option.label}}</option>
+	<ng-container *ngFor="let control of keys">
+		<ng-container *ngIf="formGroup.controls[control].controlType === 'Input' || formGroup.controls[control].controlType === 'TextArea' || formGroup.controls[control].controlType === 'Password'">
+			<mat-form-field class="formify-input" *ngIf="formGroup.controls[control].flex" [fxFlex]="formGroup.controls[control].flex">
+				<input matInput *ngIf="formGroup.controls[control].controlType === 'Input'" [formControl]="formGroup.controls[control]" type="text" [placeholder]="formGroup.controls[control].placeholder" />
+				<textarea matInput *ngIf="formGroup.controls[control].controlType === 'TextArea'" [placeholder]="formGroup.controls[control].placeholder" [formControl]="formGroup.controls[control]"></textarea>
+				<input matInput *ngIf="formGroup.controls[control].controlType === 'Password'" [formControl]="formGroup.controls[control]" type="password" [placeholder]="formGroup.controls[control].placeholder" />
+			</mat-form-field>
+			<mat-form-field class="formify-input" *ngIf="!formGroup.controls[control].flex">
+				<input matInput *ngIf="formGroup.controls[control].controlType === 'Input'" [formControl]="formGroup.controls[control]" type="text" [placeholder]="formGroup.controls[control].placeholder" />
+				<textarea matInput *ngIf="formGroup.controls[control].controlType === 'TextArea'" [placeholder]="formGroup.controls[control].placeholder" [formControl]="formGroup.controls[control]"></textarea>
+				<input matInput *ngIf="formGroup.controls[control].controlType === 'Password'" [formControl]="formGroup.controls[control]" type="password" [placeholder]="formGroup.controls[control].placeholder" />
+			</mat-form-field>
+		</ng-container>
+
+		<mat-select class="formify-input" *ngIf="formGroup.controls[control].controlType === 'Select' && formGroup.controls[control].flex" [formControl]="formGroup.controls[control]" [fxFlex]="formGroup.controls[control].flex">
+			<mat-option *ngFor="let option of formGroup.controls[control].options" [value]="option.data">{{option.label}}</mat-option>
 		</mat-select>
-		<mat-radio-group *ngSwitchCase="'Radio'" [formControl]="formGroup.controls[control]">
+		<mat-select class="formify-input" *ngIf="formGroup.controls[control].controlType === 'Select' && !formGroup.controls[control].flex" [formControl]="formGroup.controls[control]">
+			<mat-option *ngFor="let option of formGroup.controls[control].options" [value]="option.data">{{option.label}}</mat-option>
+		</mat-select>
+		
+		<mat-radio-group class="formify-input" *ngIf="formGroup.controls[control].controlType === 'Radio' && formGroup.controls[control].flex" [formControl]="formGroup.controls[control]" [fxFlex]="formGroup.controls[control].flex">
 			<mat-radio-button *ngFor="let option of formGroup.controls[control].options" class="formify-radio-line" [value]="option.data">{{option.label}}</mat-radio-button>
 		</mat-radio-group>
-		<mat-checkbox *ngSwitchCase="'Checkbox'" [formControl]="formGroup.controls[control]">{{formGroup.controls[control].placeholder}}</mat-checkbox>
-		<ng-template [ngSwitchCase]="'Password'">
-			<input matInput [formControl]="formGroup.controls[control]" type="password" />
-			<mat-placeholder>{{formGroup.controls[control].placeholder}}</mat-placeholder>
-		</ng-template>
-		<input *ngSwitchCase="'File'" [formControl]="formGroup.controls[control]" type="file" (change)="fileSelected( $event.target.files )"
-		/>
-	</mat-form-field>
+		<mat-radio-group class="formify-input" *ngIf="formGroup.controls[control].controlType === 'Radio' && !formGroup.controls[control].flex" [formControl]="formGroup.controls[control]">
+			<mat-radio-button *ngFor="let option of formGroup.controls[control].options" class="formify-radio-line" [value]="option.data">{{option.label}}</mat-radio-button>
+		</mat-radio-group>
+
+		<mat-checkbox class="formify-input" *ngIf="formGroup.controls[control].controlType === 'Checkbox' && formGroup.controls[control].flex" [formControl]="formGroup.controls[control]" [fxFlex]="formGroup.controls[control].flex">{{formGroup.controls[control].placeholder}}</mat-checkbox>
+		<mat-checkbox class="formify-input" *ngIf="formGroup.controls[control].controlType === 'Checkbox' && !formGroup.controls[control].flex" [formControl]="formGroup.controls[control]">{{formGroup.controls[control].placeholder}}</mat-checkbox>
+
+		<input *ngIf="formGroup.controls[control].controlType === 'File'" [formControl]="formGroup.controls[control]" type="file" (change)="fileSelected( $event.target.files )" />
+	</ng-container>
 </form>

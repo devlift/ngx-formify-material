@@ -9,5 +9,6 @@ export default interface FormDecoratorData {
 	placeholder?: string;
 	validators?: ValidatorFn | ValidatorFn[];
 	defaultValue?: any;
+	flex?: number;
 	options?: SelectOption[];
 }

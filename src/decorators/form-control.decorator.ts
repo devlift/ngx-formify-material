@@ -6,6 +6,7 @@ export interface FormControlDecoratorOptions {
 	placeholder?: string;
 	validators?: ValidatorFn[];
 	defaultValue?: any;
+	flex?: number;
 };
 
 export const FormControl = (type: FormControlType.Input | FormControlType.TextArea | FormControlType.Checkbox | FormControlType.Password, options?: FormControlDecoratorOptions) => {
@@ -20,7 +21,8 @@ export const FormControl = (type: FormControlType.Input | FormControlType.TextAr
 					order: o.order,
 					placeholder: o.placeholder,
 					validators: o.validators,
-					defaultValue: o.defaultValue
+					defaultValue: o.defaultValue,
+					flex: o.flex
 				},
 				enumerable: false,
 				configurable: false

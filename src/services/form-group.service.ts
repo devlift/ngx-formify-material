@@ -39,6 +39,7 @@ export class FormGroupService {
 				control.placeholder = datum.placeholder || '';
 				control.controlType = datum.type;
 				control.options = datum.options;
+				control.flex = datum.flex;
 				
 				form.addControl( datum.name, control );
 			} );
