@@ -1,0 +1,22 @@
+<form class="formify" [class]="formClass">
+	<mat-form-field class="formify-input" *ngFor="let control of keys" [ngSwitch]="formGroup.controls[control].controlType">
+		<ng-template [ngSwitchCase]="'Input'">
+			<input matInput [formControl]="formGroup.controls[control]" type="text" />
+			<mat-placeholder>{{formGroup.controls[control].placeholder}}</mat-placeholder>
+		</ng-template>
+		<textarea matInput *ngSwitchCase="'TextArea'" [placeholder]="formGroup.controls[control].placeholder" [formControl]="formGroup.controls[control]"></textarea>
+		<mat-select *ngSwitchCase="'Select'" [formControl]="formGroup.controls[control]">
+			<option *ngFor="let option of formGroup.controls[control].options" [value]="option.data">{{option.label}}</option>
+		</mat-select>
+		<mat-radio-group *ngSwitchCase="'Radio'" [formControl]="formGroup.controls[control]">
+			<mat-radio-button *ngFor="let option of formGroup.controls[control].options" class="formify-radio-line" [value]="option.data">{{option.label}}</mat-radio-button>
+		</mat-radio-group>
+		<mat-checkbox *ngSwitchCase="'Checkbox'" [formControl]="formGroup.controls[control]">{{formGroup.controls[control].placeholder}}</mat-checkbox>
+		<ng-template [ngSwitchCase]="'Password'">
+			<input matInput [formControl]="formGroup.controls[control]" type="password" />
+			<mat-placeholder>{{formGroup.controls[control].placeholder}}</mat-placeholder>
+		</ng-template>
+		<input *ngSwitchCase="'File'" [formControl]="formGroup.controls[control]" type="file" (change)="fileSelected( $event.target.files )"
+		/>
+	</mat-form-field>
+</form>
