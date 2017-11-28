@@ -1,6 +1,6 @@
 {
   "name": "ngx-formify-material",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "",
   "main": "dist/bundles/formify.umd.min.js",
   "scripts": {
@@ -12,11 +12,11 @@
   },
   "author": "Devlift Media",
   "license": "ISC",
-  "homepage": "https://github.com/devlift/ngx-formify",
-  "bugs": "https://github.com/devlift/ngx-formify/issues",
+  "homepage": "https://github.com/devlift/ngx-formify-material",
+  "bugs": "https://github.com/devlift/ngx-formify-material/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/devlift/ngx-formify.git"
+    "url": "https://github.com/devlift/ngx-formify-material.git"
   },
   "contributors": [
     {
